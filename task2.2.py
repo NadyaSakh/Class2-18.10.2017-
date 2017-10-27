@@ -7,14 +7,14 @@
 Стандартной функцией возведения в степень польоваться нельзя.
 
 """
-
+import sys
 
 a = None
 power = None
 
 
 def in_power(a, power):
-    if a is None or power is None:
+    if a is None or power is None: #когда введены некорректные данные
         print("Некорректная степень")
         return
     pow_a = 1
@@ -32,12 +32,19 @@ def input_function(a, power):
         a = float(input("Введите число, которое желаете возвести в степень:\n"))
     except ValueError:
         print("Вы должны ввести число")
-        return
+        sys.exit() #   Как правильно делать выход из программы при обработке исключения?
+    except TypeError:
+        print("Введены некорректные данные")
+        sys.exit()
     try:
         power = int(input("Введите степень числа а:\n"))
+        sys.exit()
     except ValueError:
         print("Вы должны ввести целое число")
-        return
+        sys.exit()
+    except TypeError:
+        print("Введены некорректные данные")
+        sys.exit()
     return a, power
 
 a, power = input_function(a, power)
