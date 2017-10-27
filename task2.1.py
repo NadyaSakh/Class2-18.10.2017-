@@ -21,40 +21,54 @@ students = [ [Петя, 4.5], [Вася, 4.3], [Коля, 3.5], [Никита, 4
 """
 
 
-def entering_list():
+students = []
+marks = []
 
-    students = list()
-    name = str()
-    print("Начните ввод данных (имя и оценка через клавишу enter). Для окончания введите '-1':")
-    while name != '-1':
-        name = input()
-        if name == '-1':
-            break
-        mark = float(input())
-        en_lst = list()
-        en_lst.append(name)
-        en_lst.append(mark)
-        students.append(en_lst)
+
+def input_data(marks, students):
+    imp_str = ''
+    print("Введите имена и оценки через пробел. \
+Напишите end для выхода\n")
+    while imp_str != 'end':
+        imp_str = input()
+        if imp_str != 'end':
+            tmp_list = imp_str.split(" ")
+            try:
+                mark = float(tmp_list[1])
+            except ValueError:
+                print("Оценка должна быть числом")
+                break
+            except IndexError:
+                print("Вы не ввели имя")
+                break
+            if mark > 5 or mark <= 0 or mark is None:
+                print("Оценка должна быть числом от 0 до 5")
+                break
+            if not tmp_list:
+                break
+            students.append(tmp_list)
+            marks.append(tmp_list[1])
         print(students)
-    return students
+        print(marks)
 
 
-def sort_by_mark(students):
+def sort_by_mark(marks, students):
+    if not students or not marks:
+        print("Пустой список")
+        return
+    if len(marks) != len(students):
+        print("Недостаточно данных")
+        return
+    marks = set(marks)
+    marks = sorted(marks)
+    try:
+        second_min = marks[1]
+    except IndexError:
+        print('Слишком мало студентов')
+        return
+    for student in students:
+        if student[1] == second_min:
+            print(student[0])
 
-    sorting_list = []
-    for item in students:
-        sorting_list.append(item[1])
-    sorting_list.sort()  # Сортируем по оценкам
-    min = sorting_list[0]
-    for item in sorting_list:  # Находим предпоследнюю по успеваемости оценку
-        if item != min:
-            sec_min = item
-            break
-    print(sorting_list)
-    print(sec_min)
-    for item in students:  # Найденные ученики, предпоследние по усеваемости
-        if item[1] == sec_min:
-            print(item[0])
-
-sort_by_mark(entering_list())
-
+input_data(marks, students)
+sort_by_mark(marks, students)

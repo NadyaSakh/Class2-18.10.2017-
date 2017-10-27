@@ -9,18 +9,36 @@
 """
 
 
-def power(a, n):
-    pow_a = 1
-    if n == 0:
-        pow_a = 1
-    if n > 0:
-        while n > 0:
-            pow_a *= a
-            n -= 1
-    if n < 0:
-        pow_a = 1/power(a, -1 * n)
-    return pow_a
+a = None
+power = None
 
-a = float(input("Введите число, которое желаете возвести в степень:\n"))
-n = int(input("Введите степень числа а:\n"))
-print(power(a, n))
+
+def in_power(a, power):
+    if a is None or power is None:
+        print("Некорректная степень")
+        return
+    pow_a = 1
+    if power > 0:
+        while power > 0:
+            pow_a *= a
+            power -= 1
+    elif power < 0:
+        pow_a = 1/power(a, -1 * power)
+    print(pow_a)
+
+
+def input_function(a, power):
+    try:
+        a = float(input("Введите число, которое желаете возвести в степень:\n"))
+    except ValueError:
+        print("Вы должны ввести число")
+        return
+    try:
+        power = int(input("Введите степень числа а:\n"))
+    except ValueError:
+        print("Вы должны ввести целое число")
+        return
+    return a, power
+
+a, power = input_function(a, power)
+in_power(a, power)
